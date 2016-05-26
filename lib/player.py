@@ -322,7 +322,7 @@ def loop(g, s):
 
     if s.jump_timer and not s.jumping:
         s.jump_timer -= 1
-        x_speed = 2.0
+        x_speed = 1.0
     else:
         x_speed = 1.0
 
