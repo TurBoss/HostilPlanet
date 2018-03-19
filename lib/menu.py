@@ -78,7 +78,7 @@ class Menu(engine.State):
         y += 24
 
         x = 90
-        for n in xrange(0, len(self.items)):
+        for n in range(0, len(self.items)):
             text, value = self.items[n]
             text = text.replace('L', self.levels[self.game.lcur][1])
             c = (0x00, 0x00, 0x00)
@@ -133,12 +133,12 @@ class Menu(engine.State):
             if value == 'start':
                 self.game.init_play()
                 self.game.lcur = 0
-                import level
+                from lib import level
                 l = level.Level(self.game, None, self)
                 return Transition(self.game, l)
             elif value == 'play':
                 self.game.init_play()
-                import level
+                from lib import level
                 l = level.Level(self.game, None, self)
                 return Transition(self.game, l)
             elif value == 'quit':
@@ -190,12 +190,12 @@ class Transition(engine.State):
         if f < t2:
             i = self.s1
             w = max(2, SW * (t2 - f) / t2)
-            i = pygame.transform.scale(i, (w, SH * w / SW))
+            i = pygame.transform.scale(i, (int(w), int(SH * w // SW)))
         else:
             f = t2 - (f - t2)
             i = self.s2
             w = max(2, SW * (t2 - f) / t2)
-            i = pygame.transform.scale(i, (w, SH * w / SW))
+            i = pygame.transform.scale(i, (int(w), int(SH * w // SW)))
 
         i = pygame.transform.scale(i, (SW, SH))
 
@@ -214,7 +214,7 @@ class Intro(engine.State):
         self.moon = pygame.image.load(data.filepath(os.path.join('intro', 'intro.png'))).convert()
         img = pygame.image.load(data.filepath(os.path.join('images', 'logo.png')))
         w = 120
-        self.logo = pygame.transform.scale(img, (w, img.get_height() * w / img.get_width()))
+        self.logo = pygame.transform.scale(img, (w, img.get_height() * w // img.get_width()))
         self.black = self.moon.convert()
         self.black.fill((0, 0, 0))
 
@@ -277,7 +277,7 @@ class Intro2(engine.State):
         self.moon = pygame.image.load(data.filepath(os.path.join('intro', 'intro.png'))).convert()
         img = pygame.image.load(data.filepath(os.path.join('images', 'jump', 'player', 'right.png')))
         w = 160
-        self.player = pygame.transform.scale(img, (w, img.get_height() * w / img.get_width()))
+        self.player = pygame.transform.scale(img, (w, img.get_height() * w // img.get_width()))
 
         self.bkgr = pygame.image.load(data.filepath(os.path.join('bkgr', '2.png')))
 
@@ -814,8 +814,8 @@ class Weapon(engine.State):
 
         w = 40
 
-        player_img = pygame.transform.scale(player_img, (w, player_img.get_height() * w / player_img.get_width()))
-        player_x, player_y = ((SW - player_img.get_width()) / 2) + 5 , ((SH - player_img.get_height()) / 2) - 10
+        player_img = pygame.transform.scale(player_img, (w, player_img.get_height() * w // player_img.get_width()))
+        player_x, player_y = ((SW - player_img.get_width()) / 2) + 5, ((SH - player_img.get_height()) / 2) - 10
 
         screen.blit(player_img, (player_x, player_y))
 

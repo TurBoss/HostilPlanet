@@ -147,10 +147,10 @@ class Game(engine.Game):
         # wav files
         for name in ['shoot', 'capsule', 'coin', 'hit', 'item', 'powerup',
                      'pop', 'jump', 'explode', 'door', 'fally', 'boss_explode', 'laser']:
-            self.sfx[name] = Sound(data.filepath(os.path.join('sfx', '%s.wav' % name)))
+            self.sfx[name] = Sound(filepath(os.path.join('sfx', '%s.wav' % name)))
 
         for name in ['rocket1', 'shootgun1', 'armor1', 'cannon', 'sboom']:
-            self.sfx[name] = Sound(data.filepath(os.path.join('sfx', '%s.ogg' % name)))
+            self.sfx[name] = Sound(filepath(os.path.join('sfx', '%s.ogg' % name)))
 
     def tick(self):
         r = self.timer.tick()
@@ -172,7 +172,7 @@ class Game(engine.Game):
 
             # silly TV effect ...
             if '-tv' in sys.argv:
-                for y in xrange(0, SH * 2, 2):
+                for y in range(0, SH * 2, 2):
                     self._screen.fill((0, 0, 0), (0, y, SW * 2, 1))
 
         pygame.display.flip()
@@ -184,7 +184,7 @@ class Game(engine.Game):
         if not pygame.mixer.get_init(): return
 
         for ext in ['wav', 'ogg']:
-            fname = data.filepath(os.path.join('music', '%s.%s' % (name, ext)))
+            fname = filepath(os.path.join('music', '%s.%s' % (name, ext)))
             ok = False
             try:
                 # print fname
@@ -323,7 +323,7 @@ def main():
     g = Game()
     g.init()
 
-    import menu
+    from lib import menu
 
     l = l2 = menu.Menu(g)
     l = menu.Intro(g, l2)

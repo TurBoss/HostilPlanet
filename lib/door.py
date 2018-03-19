@@ -54,8 +54,9 @@ def hit(g, pos, b):
     from lib import sprite
     # n_code = sprite.get_code(g,a,1,0)
     dx = 1
-    while g.data[2][cy][cx + dx] in DOOR_CODES: dx += 1
-    n_code = g.data[2][cy][cx + dx]
+    while g.data[2][int(cy)][int(cx) + dx] in DOOR_CODES:
+        dx += 1
+    n_code = g.data[2][int(cy)][int(cx) + dx]
 
     if n_code == 0: return
 

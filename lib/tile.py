@@ -14,7 +14,7 @@ def t_init(g, r, n, hit_groups, hit, *params):
     t.standable = 0
     if len(params) > 0:
         t.standable = params[0]
-    g.layer[r.centery / TH][r.centerx / TW] = t
+    g.layer[r.centery // TH][r.centerx // TW] = t
     return t
 
 

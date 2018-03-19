@@ -2,7 +2,9 @@ import pygame
 from lib.cnst import *
 from lib import tiles
 from lib import player
-from lib import sprites
+
+from lib import shoot
+from lib import explosion
 
 
 def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
@@ -32,11 +34,11 @@ def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
 
     if got_hit and 'shoot' in b.groups:
         b.active = False
-        sprites.shoot.sound(g)
+        shoot.sound(g)
 
     if got_hit and 'cannon' in b.groups:
-        sprites.shoot.sound(g)
-        sprites.explosion.init(g, b.rect, b)
+        shoot.sound(g)
+        explosion.init(g, b.rect, b)
         b.active = False
 
     if got_hit and 'granadelauncher' in b.groups:

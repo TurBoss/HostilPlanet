@@ -12,7 +12,7 @@ from lib.sprite import get_code
 from lib.sprite import apply_gravity
 from lib.sprite import apply_standing
 
-from lib import tiles
+from lib.tiles import t_put
 
 from lib import shoot
 from lib import drone
@@ -388,7 +388,7 @@ def loop(g, s):
         g.status = 'exit'
     if n == CODE_DOOR_AUTO:
         x, y = s.rect.centerx / TW, s.rect.centery / TH
-        import door
+        from lib import door
         door.hit(g, (x, y), s)
 
     # pan_screen(g,s)

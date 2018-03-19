@@ -30,14 +30,27 @@ def load_level(fname):
 def load_tiles(fname):
     img = pygame.image.load(fname).convert_alpha()
     w, h = img.get_width() / TW, img.get_height() / TH
-    return [img.subsurface((n % w) * TW, (n / w) * TH, TW, TH) for n in range(0, w * h)]
+
+    a = int(w * h)
+    print(a)
+    tiles = list()
+    for n in range(a):
+
+        t_w = int(n % h)
+        t_h = int(n / h)
+        subsurf = img.subsurface((t_w * TW, t_h * TH, TW, TH))
+
+        tiles.append(subsurf)
+
+    return tiles
 
 
 def load_images(dname):
     r = {}
     for root, dirs, files in os.walk(dname):
         relative_root = root[len(dname):]
-        if relative_root.find('.svn') != -1: continue
+        if relative_root.find('.svn') != -1:
+            continue
         relative_root = relative_root.replace('\\', '/')
         if relative_root != '' and not relative_root.endswith('/'):
             relative_root += '/'
@@ -102,7 +115,7 @@ class Level:
         self.images[None] = img
         for n in range(0, len(self._tiles)): self.images[n] = self._tiles[n]
 
-        import tiles
+        from lib import tiles
         self._images = []
         for m in range(0, IROTATE):
             r = dict(self.images)
@@ -231,15 +244,19 @@ class Level:
 
     def run_codes(self, r):
         # r.clamp_ip(self.bounds)
-        for y in range(r.top / TH, r.bottom / TH):
-            if y < 0 or y >= self.size[1]: continue
-            for x in range(r.left / TW, r.right / TW):
-                if x < 0 or x >= self.size[0]: continue
+        for y in range(r.top // TH, r.bottom // TH):
+            if y < 0 or y >= self.size[1]:
+                continue
+            for x in range(r.left // TW, r.right // TW):
+                if x < 0 or x >= self.size[0]:
+                    continue
                 if (x, y) not in self.codes:
                     n = self.data[2][y][x]
-                    if n == 0: continue
+                    if n == 0:
+                        continue
                     s = codes.c_run(self, (x, y), n)
-                    if s == None: continue
+                    if s == None:
+                        continue
                     s._code = (x, y)
                     self.codes[(x, y)] = s
 
@@ -315,10 +332,10 @@ class Level:
         images = self._images[self.frame % IROTATE]
         for y in range(v.top - v.top % TH, v.bottom, TH):
             for x in range(v.left - v.left % TW, v.right, TW):
-                n = bg[y / TH][x / TW]
+                n = bg[y // TH][x // TW]
                 if n:
                     screen.blit(images[n], (x - v.left, y - v.top))
-                s = self.layer[y / TH][x / TW]
+                s = self.layer[y // TH][x // TW]
                 if s != None and s.image:
                     screen.blit(images[s.image], (x - v.left, y - v.top))
 
@@ -387,15 +404,18 @@ class Level:
                 hits = []
                 for y in range(r.top - r.top % TH, r.bottom, TH):
                     for x in range(r.left - r.left % TW, r.right, TW):
-                        t = self.layer[y / TH][x / TW]
-                        if t == None: continue
-                        if not t.hit_groups.intersection(s.groups): continue
+                        t = self.layer[y // TH][x // TW]
+                        if t == None:
+                            continue
+                        if not t.hit_groups.intersection(s.groups):
+                            continue
                         dist = abs(t.rect.centerx - s.rect.centerx) + abs(t.rect.centery - s.rect.centery)
                         hits.append([dist, t])
 
                 hits.sort()
                 for dist, t in hits:
-                    if not t.rect.colliderect(s.rect): continue
+                    if not t.rect.colliderect(s.rect):
+                        continue
                     t.hit(self, t, s)
 
             # remove inactive sprites
