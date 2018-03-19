@@ -293,7 +293,7 @@ def loop(g, s):
     if s.door_timer is not None:
         if s.door_timer == 0:
             x, y = s.door_pos  # s.rect.centerx/TW,s.rect.centery/TH
-            import door
+            from lib import door
             # door.hit(g,g.layer[y][x],s)
             door.hit(g, (x, y), s)
             # tiles.t_put(g,(x,y), 0x30)

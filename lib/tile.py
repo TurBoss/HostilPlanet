@@ -43,7 +43,7 @@ def th_init(g, r, n, hit_groups, hit, *params):
 
 
 def tile_to_sprite(g, s):
-    import tiles
+    from lib import tiles
     x, y = s.rect.centerx / TW, s.rect.centery / TH
     tiles.t_put(g, (x, y), 0)
 

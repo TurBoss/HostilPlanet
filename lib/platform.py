@@ -9,7 +9,7 @@ from lib import levels
 def init(g, r, n, vx, vy):
     platform_type = levels.LEVELS[g.game.lcur][2]
 
-    x, y = r.centerx / TW, r.centery / TH
+    x, y = r.centerx // TW, r.centery // TH
     code = g.data[2][y][x]
     min_x = x
     max_x = x

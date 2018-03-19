@@ -42,8 +42,8 @@ def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
         b.active = False
 
     if got_hit and 'granadelauncher' in b.groups:
-        sprites.shoot.sound(g)
-        sprites.explosion.init(g, b.rect, b)
+        shoot.sound(g)
+        explosion.init(g, b.rect, b)
         b.active = False
 
     if got_hit and 'enemyshoot' in b.groups:

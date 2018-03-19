@@ -1,7 +1,9 @@
 import pygame
 from lib.cnst import *
 
+from functools import total_ordering
 
+@total_ordering
 class Sprite:
     def __init__(self, r, n):
         self.rect = pygame.Rect(r)
@@ -23,6 +25,10 @@ class Sprite:
         self.deinit = deinit
 
         self.auto_gc = True
+        self.number = 0
+
+    def __lt__(self, other):
+        return self.number < other.number
 
 
 def Sprite2(g, r, n):
