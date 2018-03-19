@@ -1,8 +1,8 @@
 import pygame
-from cnst import *
-import tiles
-import player
-import sprites
+from lib.cnst import *
+from lib import tiles
+from lib import player
+from lib import sprites
 
 
 def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
@@ -67,8 +67,8 @@ def hit_fally(g, a, b, top=1, right=1, bottom=1, left=1):
     if not hasattr(b, 'standing'): return
     if b.standing != a: return
 
-    import tile
-    import sprite
+    from lib import tile
+    from lib import sprite
     tile.tile_to_sprite(g, a)
 
     s = a
@@ -185,7 +185,7 @@ def hit_item(g, a, b, pts):
     g.game.score += pts
     tile_explode(g, a)
 
-    import sprites
+    from lib import sprites
     sprites.points.init(g, a.rect, pts)
 
 
@@ -253,7 +253,7 @@ def tile_close(g, a, b):
 def tile_explode(g, a):
     g.game.sfx['explode'].play()
     tiles.t_put(g, a.pos, 0)
-    import tile
+    from lib import tile
     tile.tile_to_sprite(g, a)
     s = a
     s.hit_groups = set()

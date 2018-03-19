@@ -1,5 +1,5 @@
-from cnst import *
-import sprite
+from lib.cnst import *
+from lib import sprite
 
 
 def init(g, r, v):

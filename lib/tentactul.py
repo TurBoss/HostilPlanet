@@ -1,9 +1,9 @@
 import pygame
-import sprite
-import player
-import tentactulshoot
+from lib import sprite
+from lib import player
+from lib import tentactulshoot
 import random
-from cnst import *
+from lib.cnst import *
 
 
 def init(g, r, n, facing='left', *params):

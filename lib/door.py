@@ -1,7 +1,7 @@
 import pygame
-from cnst import *
-import sprite
-import levels
+from lib.cnst import *
+from lib import sprite
+from lib import levels
 
 
 def init(g, r, n, hidden=False, *params):
@@ -51,7 +51,7 @@ def sprite_hit(g, a, b):
 def hit(g, pos, b):
     cx, cy = pos
 
-    import sprite
+    from lib import sprite
     # n_code = sprite.get_code(g,a,1,0)
     dx = 1
     while g.data[2][cy][cx + dx] in DOOR_CODES: dx += 1
@@ -63,8 +63,8 @@ def hit(g, pos, b):
 
     w, h = g.size
     xx, yy = cx, cy
-    for y in xrange(0, h):
-        for x in xrange(0, w):
+    for y in range(0, h):
+        for x in range(0, w):
             if layer[y][x] in DOOR_CODES and layer[y][x - 1] == n_code:
                 xx, yy = x, y
 

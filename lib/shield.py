@@ -1,5 +1,5 @@
 import pygame
-import sprite
+from lib import sprite
 
 
 def init(g, r, n):

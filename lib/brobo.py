@@ -1,9 +1,9 @@
 import pygame
-import sprite
-import player
+from lib import sprite
+from lib import player
 # import laser
 
-from cnst import *
+from lib.cnst import *
 
 
 def init(g, r, n, facing, *params):

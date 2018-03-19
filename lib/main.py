@@ -9,10 +9,11 @@ directory.
 import sys
 import os
 import pygame
-from pgu import timer
-from pgu import engine
-from cnst import *
-import data
+
+from lib.pgu import timer
+from lib.pgu import engine
+from lib.cnst import *
+from lib.data import filepath
 
 
 class Input:
@@ -97,7 +98,7 @@ class Game(engine.Game):
 
         pygame.font.init()
 
-        f_main = data.filepath(os.path.join('fonts', '04B_20__.TTF'))
+        f_main = filepath(os.path.join('fonts', '04B_20__.TTF'))
         f_scale = 0.16
         # f_main = data.filepath(os.path.join('fonts','04B_25__.TTF'))
         # f_scale = 0.75
@@ -117,8 +118,8 @@ class Game(engine.Game):
 
         self.fonts['pause'] = pygame.font.Font(f_main, int(58 * f_scale))
 
-        import level
-        level.pre_load()
+        from lib.level import pre_load
+        pre_load()
 
         try:
 
@@ -138,7 +139,7 @@ class Game(engine.Game):
 
             pygame.mixer.init()
         except:
-            print 'mixer not initialized'
+            print('mixer not initialized')
 
         self._music_name = None
 
@@ -153,7 +154,7 @@ class Game(engine.Game):
 
     def tick(self):
         r = self.timer.tick()
-        if r != None: print r
+        if r != None: print(r)
 
     def flip(self):
         if not self.lowres:

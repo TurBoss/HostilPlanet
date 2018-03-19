@@ -1,7 +1,7 @@
 import pygame
-from pid import PID
-import sprite
-import droneshoot
+from lib.pid import PID
+from lib import sprite
+from lib import droneshoot
 
 
 def init(g, r, n, drone):

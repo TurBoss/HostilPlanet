@@ -1,5 +1,5 @@
-from cnst import *
-import sprite
+from lib.cnst import *
+from lib import sprite
 
 
 def t_init(g, r, n, hit_groups, hit, *params):

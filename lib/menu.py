@@ -1,10 +1,10 @@
 import os
 import pygame
 
-from pgu import engine
-import data
-from cnst import *
-import levels
+from lib.pgu import engine
+from lib import data
+from lib.cnst import *
+from lib import levels
 
 
 class Menu(engine.State):

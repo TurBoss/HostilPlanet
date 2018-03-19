@@ -1,5 +1,5 @@
-import sprite
-from pid import PID
+from lib import sprite
+from lib.pid import PID
 
 
 def init(g, r, p, enemy):

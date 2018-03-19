@@ -1,5 +1,5 @@
 import pygame
-from cnst import *
+from lib.cnst import *
 
 
 class Sprite:

@@ -1,4 +1,4 @@
-from cnst import *
+from lib.cnst import *
 
 
 def init_bkgr(g, r, n):

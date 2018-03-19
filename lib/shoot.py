@@ -1,7 +1,7 @@
-import sprite
-import explosion
+from lib import sprite
+from lib import explosion
 
-from pid import PID
+from lib.pid import PID
 
 
 def init(g, r, p, weapon, enemy, granade=0):
