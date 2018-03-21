@@ -3,6 +3,7 @@
 from .const import *
 from . import widget
 
+
 class Group(widget.Widget):
     """An object for grouping together Form elements.
     
@@ -14,8 +15,8 @@ class Group(widget.Widget):
 
     _value = None
     widgets = None
-    
-    def __init__(self,name=None,value=None):
+
+    def __init__(self, name=None, value=None):
         """Create Group instance.
 
         Arguments:
@@ -23,10 +24,10 @@ class Group(widget.Widget):
         value -- values that are currently selected in the group
     
         """
-        widget.Widget.__init__(self,name=name,value=value)
+        widget.Widget.__init__(self, name=name, value=value)
         self.widgets = []
-    
-    def add(self,w):
+
+    def add(self, w):
         """Add a widget to this group."""
         self.widgets.append(w)
 
@@ -40,10 +41,9 @@ class Group(widget.Widget):
         self._value = val
         if (oldval != val):
             self._change()
-    
+
     def _change(self):
         self.send(CHANGE)
         if (self.widgets):
             for w in self.widgets:
                 w.repaint()
-

@@ -3,6 +3,7 @@ from lib.cnst import *
 
 from functools import total_ordering
 
+
 @total_ordering
 class Sprite:
     def __init__(self, r, n):

@@ -123,7 +123,8 @@ class Game(engine.Game):
 
         try:
 
-            if '-nosound' in sys.argv: 1 / 0
+            if '-nosound' in sys.argv:
+                1 / 0
 
             # stop crackling sound on some windows XP machines.
             if os.name == 'posix' or 1:
@@ -334,3 +335,7 @@ def main():
 
     g.run(l)
     pygame.quit()
+
+
+if __name__ == "__main__":
+    main()

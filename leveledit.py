@@ -108,7 +108,6 @@ class _app(gui.Container):
         # self.level = tilevid.Tilevid()
         # g = self.level = isovid.Isovid()
 
-
         if self.fname != None:
             self.level.tga_load_level(self.fname, 1)
         else:
@@ -336,7 +335,7 @@ class tpicker(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (
-                    e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
             w = app.tiles_w / app.tile_w
             x, y = e.pos[0] / app.tile_w, e.pos[1] / app.tile_h
             n = x + y * w
@@ -365,7 +364,7 @@ class cpicker(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (
-                    e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
             w = app.codes_w / app.tile_w
             x, y = e.pos[0] / app.tile_w, e.pos[1] / app.tile_h
             n = x + y * w
@@ -502,9 +501,6 @@ class vdraw(gui.Widget):
         corners = [app.level.tile_to_screen(tcorners[n]) for n in range(0, 4)]
         pygame.draw.lines(s, (255, 255, 255), 1, corners, 2)
 
-
-
-
         # s.blit(self.grid,(0,0))
         # r = app.select
         # pygame.draw.rect(s,(255,255,255,128),Rect(r.x*self.rect.w/app.view_w,r.y*self.rect.h/app.view_h,r.w*self.rect.w/app.view_w,r.h*self.rect.h/app.view_h),4)
@@ -513,7 +509,7 @@ class vdraw(gui.Widget):
         if e.type is MOUSEMOTION:
             self.getpos(e)
         if (e.type is MOUSEBUTTONDOWN and e.button == 3) or (
-                    e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
             self.picker_down(e)
         if e.type is MOUSEBUTTONDOWN and e.button == 1:
             self.getpos(e)
@@ -700,7 +696,8 @@ def cmd_copy(value):
     # app.clipboard.fill((0,0,0,0))
     # app.clipboard.blit(s,(0,0))
 
-    print app.clipboard.get_at((0, 0))
+    print
+    app.clipboard.get_at((0, 0))
 
 
 def cmd_paste(value):
@@ -938,7 +935,8 @@ def cmd_preview(value):
     # this should work instead:
     if sys.platform.lower() == 'win32':
         cmd = "preview.py _preview.tga"
-    print cmd
+    print
+    cmd
     os.system(cmd)
 
 
@@ -1310,7 +1308,6 @@ def init_gui():
     top = gui.Desktop(
         theme=gui.Theme([os.path.join('data', 'themes', 'default'), os.path.join('data', 'themes', 'tools')]))
     # top.theme.load(['default','tools'])
-
 
     pass
 

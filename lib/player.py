@@ -63,7 +63,7 @@ def init(g, r, n, *params):
 
     s.shield = False
     s.shield_sprite = None
-    s.shield_countdown = 5*30
+    s.shield_countdown = 5 * 30
     s.shield_counter = 0
 
     s._prev = pygame.Rect(s.rect)
@@ -83,6 +83,7 @@ def init(g, r, n, *params):
         s.strength = g.game.strength
 
     return s
+
 
 def event(g, s, e):
     # print 'player.event',e
@@ -110,7 +111,7 @@ def event(g, s, e):
             s.double_jumping = 0
 
             if s.vy > 0:
-                #print("Down timer = %d" % s.jump_timer)
+                # print("Down timer = %d" % s.jump_timer)
                 if s.jump_timer >= 8:
                     s.jumping = 1.20
                 elif 8 > s.jump_timer >= 2:
@@ -118,7 +119,7 @@ def event(g, s, e):
                 elif s.jump_timer < 2:
                     s.jumping = 1.60
             else:
-                #print("UP timer = %d" % s.jump_timer)
+                # print("UP timer = %d" % s.jump_timer)
                 s.jumping = 0.60
 
             g.game.sfx['jump'].play()
@@ -177,7 +178,6 @@ def event(g, s, e):
     """
 
     if e.type is KEYDOWN and e.key == K_F10:
-
         g.game.chips = [True, True, True, True]
 
         g.game.powerup = "laser"
@@ -355,7 +355,6 @@ def loop(g, s):
         s.rect.x += vx
         s.rect.y += myinc(g.frame, s.vy)
 
-
     # if keys[K_UP]: vy -= 1
     # if keys[K_DOWN]: vy += 1
 
@@ -506,7 +505,6 @@ def damage(g, s, a):
 
 
 def kill(g, s, no_explode=False):
-
     if hasattr(g.game, 'powerup'):
         g.game.powerup = 'gun'
 

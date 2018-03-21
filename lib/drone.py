@@ -40,7 +40,6 @@ def init(g, r, n, drone):
 
 
 def loop(g, s):
-
     if s.drone == "guardian":
 
         sprites = g.sprites[:]

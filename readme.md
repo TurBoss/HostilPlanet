@@ -13,7 +13,7 @@ http://jauriastudios.mooo.com/builds/HostilPlanet/
 
 You might need to install this before running the game:
 ```
-  Python 2.7:     http://www.python.org/
+  Python 3.6:     http://www.python.org/
   PyGame 1.9:     http://www.pygame.org/
 ```
 
@@ -40,7 +40,7 @@ python setup.py build
 
 ### Running the game:
 
-On Windows or Mac OS X, locate the "run_game.pyw" file and double-click it.
+On Windows or macos, locate the "run_game.pyw" file and double-click it.
 
 Othewise open a terminal / console and "cd" to the game directory and run:
 

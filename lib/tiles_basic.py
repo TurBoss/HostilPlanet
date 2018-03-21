@@ -211,6 +211,7 @@ def hit_power(g, a, b, weapon):
     player.powerup(g, b, weapon)
     tile_explode(g, a)
 
+
 def hit_drone(g, a, b, drone):
     if not tile_close(g, a, b): return
 
@@ -227,6 +228,7 @@ def hit_drone(g, a, b, drone):
 
     tile_explode(g, a)
 
+
 def hit_jetpack(g, a, b, jetpack):
     if not tile_close(g, a, b): return
 
@@ -240,6 +242,7 @@ def hit_jetpack(g, a, b, jetpack):
         g.game.jetpacks[2] = jetpack
 
     tile_explode(g, a)
+
 
 def tile_close(g, a, b):
     r1 = pygame.Rect(a.rect)

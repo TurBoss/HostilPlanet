@@ -3,7 +3,6 @@ from lib.pid import PID
 
 
 def init(g, r, p, enemy):
-
     s = None
 
     if p.drone == "guardian":
@@ -41,7 +40,7 @@ def init(g, r, p, enemy):
             s.vx = -s.max_speed_x
         s.vy = 0
 
-        s.rect.centerx += s.vx * (s.rect.width / 2) -2
+        s.rect.centerx += s.vx * (s.rect.width / 2) - 2
         s.rect.centery -= 0
 
     elif p.drone == "killer":
@@ -79,14 +78,13 @@ def init(g, r, p, enemy):
             s.vx = -s.max_speed_x
         s.vy = 0
 
-        s.rect.centerx += s.vx * (s.rect.width / 2) -2
+        s.rect.centerx += s.vx * (s.rect.width / 2) - 2
         s.rect.centery -= 0
 
     return s
 
 
 def loop(g, s):
-
     s.x_pid.setPoint(s.enemy.rect.centerx)
     s.y_pid.setPoint(s.enemy.rect.centery)
 

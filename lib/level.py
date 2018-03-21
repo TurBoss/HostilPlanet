@@ -35,7 +35,6 @@ def load_tiles(fname):
     print(a)
     tiles = list()
     for n in range(a):
-
         t_w = int(n % h)
         t_h = int(n / h)
         subsurf = img.subsurface((t_w * TW, t_h * TH, TW, TH))

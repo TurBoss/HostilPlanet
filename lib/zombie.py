@@ -54,7 +54,6 @@ def loop(g, s):
     # s.direction = - s.direction
     # s.next_frame = 1
 
-
     if g.frame % s.speed == 0:
         if s.walking:
             if s._prev != None:

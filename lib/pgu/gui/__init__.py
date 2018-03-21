@@ -22,8 +22,8 @@ from .container import Container
 from .app import App, Desktop
 from .table import Table
 from .document import Document
-#html
-from .area import SlideBox, ScrollArea, List 
+# html
+from .area import SlideBox, ScrollArea, List
 
 from .form import Form
 from .group import Group
@@ -41,4 +41,3 @@ from .dialog import Dialog, FileDialog
 from .textarea import TextArea
 
 from .deprecated import Toolbox, action_open, action_setvalue, action_quit, action_exec
-
