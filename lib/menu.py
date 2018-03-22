@@ -851,12 +851,12 @@ class Weapon(engine.State):
 
             drone_img = pygame.transform.scale(current_drone,
                                                (w, current_drone.get_height() * w // current_drone.get_width()))
-            drone_x, drone_y = ((SW - drone_img.get_width()) / 2 + 19), ((SH - drone_img.get_height()) / 2) - 33
+            drone_x, drone_y = ((SW - drone_img.get_width()) // 2 + 19), ((SH - drone_img.get_height()) // 2) - 33
             screen.blit(drone_img, (drone_x, drone_y))
 
         # Jetpacks
 
-        pics_x, pics_y = (SW / 2) - 58, (SH / 2) - 30
+        pics_x, pics_y = (SW // 2) - 58, (SH // 2) - 30
 
         img = None
 
@@ -878,14 +878,14 @@ class Weapon(engine.State):
             jetpack_img = pygame.image.load(data.filepath(os.path.join('images', 'jetpack', 'double_jump.png')))
             jetpack_img = pygame.transform.scale(jetpack_img,
                                                  (w, jetpack_img.get_height() * w / jetpack_img.get_width()))
-            jetpack_x, jetpack_y = ((SW - jetpack_img.get_width()) / 2 + x), ((SH - jetpack_img.get_height()) / 2) - y
+            jetpack_x, jetpack_y = ((SW - jetpack_img.get_width()) // 2 + x), ((SH - jetpack_img.get_height()) // 2) - y
             screen.blit(jetpack_img, (jetpack_x, jetpack_y))
 
         elif self.jetpack == 2:
             jetpack_img = pygame.image.load(data.filepath(os.path.join('images', 'jetpack', 'fly.png')))
             jetpack_img = pygame.transform.scale(jetpack_img,
-                                                 (w, jetpack_img.get_height() * w / jetpack_img.get_width()))
-            jetpack_x, jetpack_y = ((SW - jetpack_img.get_width()) / 2 + x), ((SH - jetpack_img.get_height()) / 2) - y
+                                                 (w, jetpack_img.get_height() * w // jetpack_img.get_width()))
+            jetpack_x, jetpack_y = ((SW - jetpack_img.get_width()) // 2 + x), ((SH - jetpack_img.get_height()) // 2) - y
             screen.blit(jetpack_img, (jetpack_x, jetpack_y))
 
         self.game.flip()

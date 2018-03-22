@@ -25,19 +25,20 @@ class Tilevid(Vid):
 
         blit = s.blit
         yy = - (self.view.y % th)
-        my = (oy + sh) / th
-        if (oy + sh) % th: my += 1
+        my = (oy + sh) // th
+        if (oy + sh) % th:
+            my += 1
 
         if blayer != None:
-            for y in xrange(oy / th, my):
+            for y in range(oy // th, my):
                 if y >= 0 and y < h:
                     trow = tlayer[y]
                     brow = blayer[y]
                     arow = alayer[y]
                     xx = - (self.view.x % tw)
-                    mx = (ox + sw) / tw
+                    mx = (ox + sw) // tw
                     # if (ox+sh)%tw: mx += 1
-                    for x in xrange(ox / tw, mx + 1):
+                    for x in range(ox // tw, mx + 1):
                         if x >= 0 and x < w:
                             blit(tiles[brow[x]].image, (xx, yy))
                             blit(tiles[trow[x]].image, (xx, yy))
@@ -45,14 +46,14 @@ class Tilevid(Vid):
                         xx += tw
                 yy += th
         else:
-            for y in xrange(oy / th, my):
+            for y in range(oy // th, my):
                 if y >= 0 and y < h:
                     trow = tlayer[y]
                     arow = alayer[y]
                     xx = - (self.view.x % tw)
-                    mx = (ox + sw) / tw
+                    mx = (ox + sw) // tw
                     # if (ox+sh)%tw: mx += 1
-                    for x in xrange(ox / tw, mx + 1):
+                    for x in range(ox // tw, mx + 1):
                         if x >= 0 and x < w:
                             blit(tiles[trow[x]].image, (xx, yy))
                             arow[x] = 0

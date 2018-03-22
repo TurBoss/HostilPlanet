@@ -65,7 +65,7 @@ return - toggle fullscreen
 </pre>
 """
 
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from optparse import OptionParser
 
 import pygame
@@ -171,7 +171,7 @@ class _app(gui.Container):
                                       self.codes.get_height())
 
         tmp = self.level.tiles
-        self.level.tiles = [None for i in xrange(0, 256)]
+        self.level.tiles = [None for i in range(0, 256)]
         self.level.tga_load_tiles(self.codes, (self.tile_w, self.tile_h))
         self.level.codes = self.level.tiles
         self.level.tiles = tmp
@@ -302,7 +302,7 @@ def hex_image(self):
     if not hasattr(self, 'tiles_h'): self.tiles_h = 256
     rimg = pygame.Surface((self.tiles_w, self.tiles_h)).convert_alpha()
     rimg.fill((0, 0, 0, 0))
-    w, h = self.tiles_w / self.tile_w, self.tiles_h / self.tile_h
+    w, h = self.tiles_w // self.tile_w, self.tiles_h // self.tile_h
     n = 0
     fnt = pygame.font.SysFont("helvetica", self.tile_h - 1)
     for y in range(0, h):
@@ -440,8 +440,8 @@ class vdraw(gui.Widget):
         s = pygame.Surface((self.rect.w, self.rect.h))
         clrs = [(148, 148, 148), (108, 108, 108)]
         inc = 7
-        for y in range(0, self.rect.w / inc):
-            for x in range(0, self.rect.h / inc):
+        for y in range(0, self.rect.w // inc):
+            for x in range(0, self.rect.h // inc):
                 s.fill(clrs[(x + y) % 2], (x * inc, y * inc, inc, inc))
         self.bg = s
 
@@ -563,7 +563,8 @@ class vdraw(gui.Widget):
         # r = app.tile
         # app.view.set_at(pos,(r,g,b))
 
-        if pos == None: return
+        if pos == None:
+            return
         tx, ty = pos
         app.mod(pygame.Rect(tx, ty, 1, 1))
         app.level.tlayer[ty][tx] = app.tile
@@ -757,7 +758,7 @@ def _cmd_new(value):
             cfg['tiles'] = tiles
             cfg['class'] = klass
             ok = 1
-        except Exception, v:
+        except Exception as v:
             ErrorDialog("New failed.", v).open()
         if ok:
             raise Restart()
@@ -794,7 +795,7 @@ def _cmd_open(value):
             cfg['class'] = klass
 
             ok = 1
-        except Exception, v:
+        except Exception as v:
             ErrorDialog("Open failed.", v).open()
 
         if ok: raise Restart()
@@ -843,8 +844,8 @@ def cmd_delete(value):
 def cmd_tswitch(value):
     blayer = app.level.blayer
     tlayer = app.level.tlayer
-    for ty in xrange(0, app.level.size[1]):
-        for tx in xrange(0, app.level.size[0]):
+    for ty in range(0, app.level.size[1]):
+        for tx in range(0, app.level.size[0]):
             tmp = blayer[ty][tx]
             blayer[ty][tx] = tlayer[ty][tx]
             tlayer[ty][tx] = tmp
@@ -920,7 +921,7 @@ def cmd_save(value):
         cfg_to_ini(['class', 'codes', 'tiles', 'tile_w', 'tile_h'], app.fname)
         ini_save()
         app.dirty = 0
-    except Exception, v:
+    except Exception as v:
         ErrorDialog("Save failed.", v).open()
         return
 
@@ -1158,9 +1159,8 @@ def init_ini():
 
 
 def ini_save():
-    f = open(ini_fname, "wb")
-    ini.write(f)
-    f.close()
+    with open(ini_fname, "w") as f:
+        ini.write(f)
 
 
 def init_opts():

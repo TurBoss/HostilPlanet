@@ -40,6 +40,9 @@ class Sound:
 
 
 class Game(engine.Game):
+    def __init__(self):
+        super(Game, self).__init__()
+
     def init_play(self):
         self.score = 0
         self.high = 0
@@ -72,7 +75,8 @@ class Game(engine.Game):
         if not self.lowres:
             sw, sh = sw * 2, sh * 2
         mode = 0
-        if FULL: mode |= FULLSCREEN
+        if FULL:
+            mode |= FULLSCREEN
         if '-full' in sys.argv:
             mode ^= FULLSCREEN
         self.screen = pygame.display.set_mode((sw, sh), mode)
@@ -105,7 +109,7 @@ class Game(engine.Game):
         # f_main = data.filepath(os.path.join('fonts','04B_11__.TTF'))
         # f_scale = 0.67
 
-        self.fonts = {}
+        self.fonts = dict()
         self.fonts['intro'] = pygame.font.Font(f_main, int(58 * f_scale))
         # self.fonts['intro2'] = pygame.font.Font(data.filepath(os.path.join('fonts','vectroid.ttf')),72)
 
