@@ -567,7 +567,7 @@ class vdraw(gui.Widget):
             return
         tx, ty = pos
         app.mod(pygame.Rect(tx, ty, 1, 1))
-        app.level.tlayer[ty][tx] = app.tile
+        app.level.tlayer[int(ty)][int(tx)] = app.tile
         self.repaint()
 
     # bkgr

@@ -1,21 +1,24 @@
 """Square tile based engine."""
 
-from pgu.vid import *
-import pygame
+from lib.pgu.vid import Vid
+from pygame import Rect
 
 
 class Tilevid(Vid):
     """Based on [[vid]] -- see for reference."""
+    
+    def __init__(self):
+        super(Tilevid, self).__init__()
 
     def paint(self, s):
         sw, sh = s.get_width(), s.get_height()
         self.view.w, self.view.h = sw, sh
 
-        tiles = self.tiles
-        tw, th = tiles[0].image.get_width(), tiles[0].image.get_height()
+        tw, th = self.tiles[0].image.get_width(), self.tiles[0].image.get_height()
         w, h = self.size
 
-        if self.bounds != None: self.view.clamp_ip(self.bounds)
+        if self.bounds != None:
+            self.view.clamp_ip(self.bounds)
 
         ox, oy = self.view.x, self.view.y
         tlayer = self.tlayer
@@ -31,7 +34,7 @@ class Tilevid(Vid):
 
         if blayer != None:
             for y in range(oy // th, my):
-                if y >= 0 and y < h:
+                if 0 <= y < h:
                     trow = tlayer[y]
                     brow = blayer[y]
                     arow = alayer[y]
@@ -39,23 +42,23 @@ class Tilevid(Vid):
                     mx = (ox + sw) // tw
                     # if (ox+sh)%tw: mx += 1
                     for x in range(ox // tw, mx + 1):
-                        if x >= 0 and x < w:
-                            blit(tiles[brow[x]].image, (xx, yy))
-                            blit(tiles[trow[x]].image, (xx, yy))
+                        if 0 <= x < w:
+                            blit(self.tiles[brow[x]].image, (xx, yy))
+                            blit(self.tiles[trow[x]].image, (xx, yy))
                             arow[x] = 0
                         xx += tw
                 yy += th
         else:
             for y in range(oy // th, my):
-                if y >= 0 and y < h:
+                if 0 <= y < h:
                     trow = tlayer[y]
                     arow = alayer[y]
                     xx = - (self.view.x % tw)
                     mx = (ox + sw) // tw
                     # if (ox+sh)%tw: mx += 1
                     for x in range(ox // tw, mx + 1):
-                        if x >= 0 and x < w:
-                            blit(tiles[trow[x]].image, (xx, yy))
+                        if 0 <= x < w:
+                            blit(self.tiles[trow[x]].image, (xx, yy))
                             arow[x] = 0
                         xx += tw
                 yy += th
@@ -69,7 +72,7 @@ class Tilevid(Vid):
             # s._rect = Rect(s.rect)
 
         self.updates = []
-        self._view = pygame.Rect(self.view)
+        self._view = Rect(self.view)
         return [Rect(0, 0, sw, sh)]
 
     def update(self, s):
@@ -86,8 +89,8 @@ class Tilevid(Vid):
         tlayer = self.tlayer
         blayer = self.blayer
         alayer = self.alayer
-        tiles = self.tiles
-        tw, th = tiles[0].image.get_width(), tiles[0].image.get_height()
+        
+        tw, th = self.tiles[0].image.get_width(), self.tiles[0].image.get_height()
         sprites = self.sprites
         blit = s.blit
 
@@ -134,7 +137,7 @@ class Tilevid(Vid):
                     y += 1
 
         # mark sprites that are not being updated that need to be updated because
-        # they are being overwritte by sprites / tiles
+        # they are being overwritte by sprites / self.tiles
         for s in sprites:
             if s.updated == 0:
                 r = s.irect
@@ -153,8 +156,8 @@ class Tilevid(Vid):
             x, y = u
             xx, yy = x * tw - ox, y * th - oy
             if alayer[y][x] == 1:
-                if blayer != None: blit(tiles[blayer[y][x]].image, (xx, yy))
-                blit(tiles[tlayer[y][x]].image, (xx, yy))
+                if blayer != None: blit(self.tiles[blayer[y][x]].image, (xx, yy))
+                blit(self.tiles[tlayer[y][x]].image, (xx, yy))
             alayer[y][x] = 0
             us.append(Rect(xx, yy, tw, th))
 
@@ -170,14 +173,14 @@ class Tilevid(Vid):
 
     def view_to_tile(self, pos):
         x, y = pos
-        tiles = self.tiles
-        tw, th = tiles[0].image.get_width(), tiles[0].image.get_height()
+        
+        tw, th = self.tiles[0].image.get_width(), self.tiles[0].image.get_height()
         return x / tw, y / th
 
     def tile_to_view(self, pos):
         x, y = pos
-        tiles = self.tiles
-        tw, th = tiles[0].image.get_width(), tiles[0].image.get_height()
+        
+        tw, th = self.tiles[0].image.get_width(), self.tiles[0].image.get_height()
         x, y = x * tw, y * th
         return x, y
 
