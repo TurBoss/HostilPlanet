@@ -40,8 +40,6 @@ class Sound:
 
 
 class Game(engine.Game):
-    def __init__(self):
-        super(Game, self).__init__()
 
     def init_play(self):
         self.score = 0
