@@ -1,7 +1,7 @@
 import pygame
 # import random
 
-import sprite
+from lib import sprite
 
 
 def init(g, r):

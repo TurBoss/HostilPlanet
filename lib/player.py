@@ -1,15 +1,26 @@
 import pygame
 
-from cnst import *
+from lib.cnst import *
 
-import sprite
-import sprites
-import tiles
-import explosion
+from lib.sprite import myinc
+from lib.sprite import Sprite3
+from lib.sprite import init_bounds
+from lib.sprite import init_codes
+from lib.sprite import init_view
+from lib.sprite import stop_standing
+from lib.sprite import get_code
+from lib.sprite import apply_gravity
+from lib.sprite import apply_standing
+
+from lib.tiles import t_put
+
+from lib import shoot
+from lib import drone
+from lib import shield
 
 
 def init(g, r, n, *params):
-    s = sprite.Sprite3(g, r, 'player/right', (5, 2, 9, 28))  # left,top,width,height
+    s = Sprite3(g, r, 'player/right', (5, 2, 9, 28))  # left,top,width,height
     s.rect.bottom = r.bottom
     s.rect.centerx = r.centerx
     s.groups.add('player')
@@ -52,16 +63,16 @@ def init(g, r, n, *params):
 
     s.shield = False
     s.shield_sprite = None
-    s.shield_countdown = 5*30
+    s.shield_countdown = 5 * 30
     s.shield_counter = 0
 
     s._prev = pygame.Rect(s.rect)
     s._prev2 = pygame.Rect(s.rect)
     s.looking = False
 
-    sprite.init_bounds(g, s)
-    sprite.init_view(g, s)
-    sprite.init_codes(g, s)
+    init_bounds(g, s)
+    init_view(g, s)
+    init_codes(g, s)
     s.no_explode = False
 
     s.view_counter = 0
@@ -72,6 +83,7 @@ def init(g, r, n, *params):
         s.strength = g.game.strength
 
     return s
+
 
 def event(g, s, e):
     # print 'player.event',e
@@ -86,7 +98,7 @@ def event(g, s, e):
 
     if s.jetpack == "double_jump":
         if e.type is USEREVENT and e.action == 'jump' and s.standing is not None and s.jumping == 0 and s.vy == 0:
-            sprite.stop_standing(g, s)
+            stop_standing(g, s)
 
             s.double_jumping = 1
 
@@ -94,12 +106,12 @@ def event(g, s, e):
 
             g.game.sfx['jump'].play()
         elif e.type is USEREVENT and e.action == 'jump' and s.double_jumping == 1:
-            sprite.stop_standing(g, s)
+            stop_standing(g, s)
 
             s.double_jumping = 0
 
             if s.vy > 0:
-                #print("Down timer = %d" % s.jump_timer)
+                # print("Down timer = %d" % s.jump_timer)
                 if s.jump_timer >= 8:
                     s.jumping = 1.20
                 elif 8 > s.jump_timer >= 2:
@@ -107,14 +119,14 @@ def event(g, s, e):
                 elif s.jump_timer < 2:
                     s.jumping = 1.60
             else:
-                #print("UP timer = %d" % s.jump_timer)
+                # print("UP timer = %d" % s.jump_timer)
                 s.jumping = 0.60
 
             g.game.sfx['jump'].play()
 
     elif s.jetpack == "fly":
         if e.type is USEREVENT and e.action == 'jump':
-            sprite.stop_standing(g, s)
+            stop_standing(g, s)
 
             # s.vy = 0
             s.jumping = 0.4
@@ -122,7 +134,7 @@ def event(g, s, e):
 
     else:
         if e.type is USEREVENT and e.action == 'jump' and s.standing is not None and s.jumping == 0 and s.vy == 0:
-            sprite.stop_standing(g, s)
+            stop_standing(g, s)
 
             # s.vy = 0
             s.jumping = 1.21
@@ -132,7 +144,7 @@ def event(g, s, e):
         s.jumping = 0
 
     if e.type is USEREVENT and (e.action == 'up' or e.action == 'down'):
-        if sprite.get_code(g, s, 0, 0) in DOOR_CODES:
+        if get_code(g, s, 0, 0) in DOOR_CODES:
             s.vx = 0
             s.vy = 0
             s.door_timer = DOOR_DELAY
@@ -151,11 +163,11 @@ def event(g, s, e):
                 enemy_objective = enemy
         if s.canshoot:
             if s.powered_up == 'granadelauncher':
-                s.shoot = sprites.shoot.init(g, s.rect, s, s.powered_up, enemy_objective, granade=1)
-                s.shoot = sprites.shoot.init(g, s.rect, s, s.powered_up, enemy_objective, granade=2)
-                s.shoot = sprites.shoot.init(g, s.rect, s, s.powered_up, enemy_objective, granade=3)
+                s.shoot = shoot.init(g, s.rect, s, s.powered_up, enemy_objective, granade=1)
+                s.shoot = shoot.init(g, s.rect, s, s.powered_up, enemy_objective, granade=2)
+                s.shoot = shoot.init(g, s.rect, s, s.powered_up, enemy_objective, granade=3)
             else:
-                s.shoot = sprites.shoot.init(g, s.rect, s, s.powered_up, enemy_objective)
+                s.shoot = shoot.init(g, s.rect, s, s.powered_up, enemy_objective)
             s.shooting = 10
             s.canshoot = False
     """
@@ -166,7 +178,6 @@ def event(g, s, e):
     """
 
     if e.type is KEYDOWN and e.key == K_F10:
-
         g.game.chips = [True, True, True, True]
 
         g.game.powerup = "laser"
@@ -276,13 +287,13 @@ def loop(g, s):
         s.exploded -= 1
         return
 
-    sprite.apply_gravity(g, s)
-    sprite.apply_standing(g, s)
+    apply_gravity(g, s)
+    apply_standing(g, s)
 
     if s.door_timer is not None:
         if s.door_timer == 0:
             x, y = s.door_pos  # s.rect.centerx/TW,s.rect.centery/TH
-            import door
+            from lib import door
             # door.hit(g,g.layer[y][x],s)
             door.hit(g, (x, y), s)
             # tiles.t_put(g,(x,y), 0x30)
@@ -342,8 +353,7 @@ def loop(g, s):
 
         vx, vy = s.vx, s.vy
         s.rect.x += vx
-        s.rect.y += sprite.myinc(g.frame, s.vy)
-
+        s.rect.y += myinc(g.frame, s.vy)
 
     # if keys[K_UP]: vy -= 1
     # if keys[K_DOWN]: vy += 1
@@ -372,12 +382,12 @@ def loop(g, s):
     else:
         s.view_counter = 0
 
-    n = sprite.get_code(g, s, 0, 0)
+    n = get_code(g, s, 0, 0)
     if n == CODE_EXIT and (g.game.chips[0] and g.game.chips[1] and g.game.chips[2] and g.game.chips[3]):
         g.status = 'exit'
     if n == CODE_DOOR_AUTO:
         x, y = s.rect.centerx / TW, s.rect.centery / TH
-        import door
+        from lib import door
         door.hit(g, (x, y), s)
 
     # pan_screen(g,s)
@@ -387,10 +397,10 @@ def loop(g, s):
     if hasattr(g, 'boss'):
         # print g.boss.phase, g.boss.phase_frames
         if g.boss.phase == 2 and g.boss.phase_frames == 60:
-            for y in xrange(len(g.layer)):
-                for x in xrange(len(g.layer[y])):
+            for y in range(len(g.layer)):
+                for x in range(len(g.layer[y])):
                     if g.data[2][y][x] == CODE_BOSS_PHASE2_BLOCK:
-                        tiles.t_put(g, (x, y), 0x01)  # solid tile
+                        t_put(g, (x, y), 0x01)  # solid tile
         if g.boss.dead:
             g.status = 'exit'
             # pygame.mixer.music.load("
@@ -406,10 +416,10 @@ def loop(g, s):
 
         if hasattr(s.drone_sprite, "active"):
             s.drone_sprite.active = False
-        s.drone_sprite = sprites.drone.init(g, s.rect, s, s.drone)
+        s.drone_sprite = drone.init(g, s.rect, s, s.drone)
 
         if s.drone == "defender" and s.shield is False:
-            s.shield_sprite = sprites.shield.init(g, s.rect, s)
+            s.shield_sprite = shield.init(g, s.rect, s)
             s.shield = True
 
     if s.drone != "defender" and s.shield is True:
@@ -422,7 +432,7 @@ def loop(g, s):
         else:
             s.shield_counter = 0
             if s.drone == "defender" and s.shield is False:
-                s.shield_sprite = sprites.shield.init(g, s.rect, s)
+                s.shield_sprite = shield.init(g, s.rect, s)
                 s.shield = True
 
     s.jetpack = g.game.jetpack
@@ -495,7 +505,6 @@ def damage(g, s, a):
 
 
 def kill(g, s, no_explode=False):
-
     if hasattr(g.game, 'powerup'):
         g.game.powerup = 'gun'
 

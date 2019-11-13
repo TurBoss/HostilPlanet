@@ -65,7 +65,7 @@ return - toggle fullscreen
 </pre>
 """
 
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from optparse import OptionParser
 
 import pygame
@@ -107,7 +107,6 @@ class _app(gui.Container):
         # self.level = pygame.image.load(self.level_fname)
         # self.level = tilevid.Tilevid()
         # g = self.level = isovid.Isovid()
-
 
         if self.fname != None:
             self.level.tga_load_level(self.fname, 1)
@@ -172,7 +171,7 @@ class _app(gui.Container):
                                       self.codes.get_height())
 
         tmp = self.level.tiles
-        self.level.tiles = [None for i in xrange(0, 256)]
+        self.level.tiles = [None for i in range(0, 256)]
         self.level.tga_load_tiles(self.codes, (self.tile_w, self.tile_h))
         self.level.codes = self.level.tiles
         self.level.tiles = tmp
@@ -303,7 +302,7 @@ def hex_image(self):
     if not hasattr(self, 'tiles_h'): self.tiles_h = 256
     rimg = pygame.Surface((self.tiles_w, self.tiles_h)).convert_alpha()
     rimg.fill((0, 0, 0, 0))
-    w, h = self.tiles_w / self.tile_w, self.tiles_h / self.tile_h
+    w, h = self.tiles_w // self.tile_w, self.tiles_h // self.tile_h
     n = 0
     fnt = pygame.font.SysFont("helvetica", self.tile_h - 1)
     for y in range(0, h):
@@ -336,7 +335,7 @@ class tpicker(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (
-                    e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
             w = app.tiles_w / app.tile_w
             x, y = e.pos[0] / app.tile_w, e.pos[1] / app.tile_h
             n = x + y * w
@@ -365,7 +364,7 @@ class cpicker(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (
-                    e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
             w = app.codes_w / app.tile_w
             x, y = e.pos[0] / app.tile_w, e.pos[1] / app.tile_h
             n = x + y * w
@@ -441,8 +440,8 @@ class vdraw(gui.Widget):
         s = pygame.Surface((self.rect.w, self.rect.h))
         clrs = [(148, 148, 148), (108, 108, 108)]
         inc = 7
-        for y in range(0, self.rect.w / inc):
-            for x in range(0, self.rect.h / inc):
+        for y in range(0, self.rect.w // inc):
+            for x in range(0, self.rect.h // inc):
                 s.fill(clrs[(x + y) % 2], (x * inc, y * inc, inc, inc))
         self.bg = s
 
@@ -502,9 +501,6 @@ class vdraw(gui.Widget):
         corners = [app.level.tile_to_screen(tcorners[n]) for n in range(0, 4)]
         pygame.draw.lines(s, (255, 255, 255), 1, corners, 2)
 
-
-
-
         # s.blit(self.grid,(0,0))
         # r = app.select
         # pygame.draw.rect(s,(255,255,255,128),Rect(r.x*self.rect.w/app.view_w,r.y*self.rect.h/app.view_h,r.w*self.rect.w/app.view_w,r.h*self.rect.h/app.view_h),4)
@@ -513,7 +509,7 @@ class vdraw(gui.Widget):
         if e.type is MOUSEMOTION:
             self.getpos(e)
         if (e.type is MOUSEBUTTONDOWN and e.button == 3) or (
-                    e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
             self.picker_down(e)
         if e.type is MOUSEBUTTONDOWN and e.button == 1:
             self.getpos(e)
@@ -567,10 +563,11 @@ class vdraw(gui.Widget):
         # r = app.tile
         # app.view.set_at(pos,(r,g,b))
 
-        if pos == None: return
+        if pos == None:
+            return
         tx, ty = pos
         app.mod(pygame.Rect(tx, ty, 1, 1))
-        app.level.tlayer[ty][tx] = app.tile
+        app.level.tlayer[int(ty)][int(tx)] = app.tile
         self.repaint()
 
     # bkgr
@@ -700,7 +697,8 @@ def cmd_copy(value):
     # app.clipboard.fill((0,0,0,0))
     # app.clipboard.blit(s,(0,0))
 
-    print app.clipboard.get_at((0, 0))
+    print
+    app.clipboard.get_at((0, 0))
 
 
 def cmd_paste(value):
@@ -760,7 +758,7 @@ def _cmd_new(value):
             cfg['tiles'] = tiles
             cfg['class'] = klass
             ok = 1
-        except Exception, v:
+        except Exception as v:
             ErrorDialog("New failed.", v).open()
         if ok:
             raise Restart()
@@ -797,7 +795,7 @@ def _cmd_open(value):
             cfg['class'] = klass
 
             ok = 1
-        except Exception, v:
+        except Exception as v:
             ErrorDialog("Open failed.", v).open()
 
         if ok: raise Restart()
@@ -846,8 +844,8 @@ def cmd_delete(value):
 def cmd_tswitch(value):
     blayer = app.level.blayer
     tlayer = app.level.tlayer
-    for ty in xrange(0, app.level.size[1]):
-        for tx in xrange(0, app.level.size[0]):
+    for ty in range(0, app.level.size[1]):
+        for tx in range(0, app.level.size[0]):
             tmp = blayer[ty][tx]
             blayer[ty][tx] = tlayer[ty][tx]
             tlayer[ty][tx] = tmp
@@ -923,7 +921,7 @@ def cmd_save(value):
         cfg_to_ini(['class', 'codes', 'tiles', 'tile_w', 'tile_h'], app.fname)
         ini_save()
         app.dirty = 0
-    except Exception, v:
+    except Exception as v:
         ErrorDialog("Save failed.", v).open()
         return
 
@@ -938,7 +936,8 @@ def cmd_preview(value):
     # this should work instead:
     if sys.platform.lower() == 'win32':
         cmd = "preview.py _preview.tga"
-    print cmd
+    print
+    cmd
     os.system(cmd)
 
 
@@ -1160,9 +1159,8 @@ def init_ini():
 
 
 def ini_save():
-    f = open(ini_fname, "wb")
-    ini.write(f)
-    f.close()
+    with open(ini_fname, "w") as f:
+        ini.write(f)
 
 
 def init_opts():
@@ -1310,7 +1308,6 @@ def init_gui():
     top = gui.Desktop(
         theme=gui.Theme([os.path.join('data', 'themes', 'default'), os.path.join('data', 'themes', 'tools')]))
     # top.theme.load(['default','tools'])
-
 
     pass
 

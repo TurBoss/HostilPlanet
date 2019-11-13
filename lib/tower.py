@@ -1,8 +1,8 @@
 import pygame
 
-import player
-import sprite
-import towershoot
+from lib import player
+from lib import sprite
+from lib import towershoot
 
 
 def init(g, r, n, facing='left', *params):

@@ -1,8 +1,8 @@
 import pygame
 
-import player
-import sprite
-from cnst import *
+from lib import player
+from lib import sprite
+from lib.cnst import *
 
 
 def init(g, r, n, facing='left', *params):

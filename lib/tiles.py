@@ -1,7 +1,9 @@
 import pygame
 
-import tiles_basic
-from tile import *
+import lib.tiles_basic as tiles_basic
+from lib.tile import *
+
+from lib.cnst import *
 
 # NOTE: If you add new tiles, use t_init for regular tiles.
 #       tl_init and tr_init are for tiles that take up only half of the
@@ -44,8 +46,6 @@ TILES = {
     0x2D: [t_init, ['player'], tiles_basic.hit_chip, 2, ],  # chip
     0x2E: [t_init, ['player'], tiles_basic.hit_chip, 3, ],  # chip
     0x2F: [t_init, ['player'], tiles_basic.hit_chip, 4, ],  # chip
-
-
 
     # tile animations
 
@@ -100,8 +100,6 @@ TANIMATE = [
     (0x28, [int(v) for v in '00000000000000000000000111222333']),  # shootgun
     (0x38, [int(v) for v in '00000000000000000000000111222333']),  # granadelauncher
 
-
-
     (0x30, [int(v) for v in '1111111111111111111111111111111111111111111111111111111111111111']),  # door
 
     (0x4D, [int(v) for v in '0000000000000000111111111111111122222222222222221111111111111111']),  # torch
@@ -113,8 +111,6 @@ TANIMATE = [
 
     (0xCD, [int(v) for v in '0000000000000000000001111111111111111111112222222222222222222222']),  # acid
     (0xDD, [int(v) for v in '0000000000000000000001111111111111111111112222222222222222222222']),  # acid
-
-
 
     (0x7D, [int(v) for v in '00112211001122110011221100112211']),  # radial
 

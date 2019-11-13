@@ -1,7 +1,7 @@
 import pygame
-from cnst import *
-import sprite
-import levels
+from lib.cnst import *
+from lib import sprite
+from lib import levels
 
 
 def init(g, r, n, hidden=False, *params):
@@ -30,14 +30,14 @@ def loop(g, s):
         s.image = None
         return
 
-    if s.open > 0:
-        if (s.open == 40):
+    if s.open is not None:
+        if s.open == 40:
             s.image = 'doors/door-1-%d' % s.door_type
-        elif (s.open == 30):
+        elif s.open == 30:
             s.image = 'doors/door-2-%d' % s.door_type
-        elif (s.open == 20):
+        elif s.open == 20:
             s.image = 'doors/door-3-%d' % s.door_type
-        elif (s.open == 10):
+        elif s.open == 10:
             s.image = 'doors/door-open-%d' % s.door_type
             s.open = None
             return
@@ -51,11 +51,12 @@ def sprite_hit(g, a, b):
 def hit(g, pos, b):
     cx, cy = pos
 
-    import sprite
+    from lib import sprite
     # n_code = sprite.get_code(g,a,1,0)
     dx = 1
-    while g.data[2][cy][cx + dx] in DOOR_CODES: dx += 1
-    n_code = g.data[2][cy][cx + dx]
+    while g.data[2][int(cy)][int(cx) + dx] in DOOR_CODES:
+        dx += 1
+    n_code = g.data[2][int(cy)][int(cx) + dx]
 
     if n_code == 0: return
 
@@ -63,8 +64,8 @@ def hit(g, pos, b):
 
     w, h = g.size
     xx, yy = cx, cy
-    for y in xrange(0, h):
-        for x in xrange(0, w):
+    for y in range(0, h):
+        for x in range(0, w):
             if layer[y][x] in DOOR_CODES and layer[y][x - 1] == n_code:
                 xx, yy = x, y
 

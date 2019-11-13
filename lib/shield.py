@@ -1,5 +1,5 @@
 import pygame
-import sprite
+from lib import sprite
 
 
 def init(g, r, n):
@@ -9,7 +9,7 @@ def init(g, r, n):
     s.rect.bottom = r.bottom
     s.rect.centerx = r.centerx
 
-    #s.groups.add('solid')
+    # s.groups.add('solid')
     g.sprites.append(s)
 
     s.loop = loop
@@ -28,6 +28,5 @@ def init(g, r, n):
 
 
 def loop(g, s):
-
     s.rect.x = s.player.rect.x - 10
     s.rect.y = s.player.rect.y - 2

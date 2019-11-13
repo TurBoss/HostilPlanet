@@ -197,7 +197,7 @@ class cpicker(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN) or (
-                    e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
             x, y = e.pos[0] * self.palette_w / self.rect.w, e.pos[1] * self.palette_h / self.rect.h
             x, y = max(0, x), max(0, y)
             x, y = min(self.palette_w - 1, x), min(self.palette_h - 1, y)
@@ -227,12 +227,12 @@ class tpicker(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (
-                    e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
             x, y = e.pos[0] / app.tile_w * app.tile_w, e.pos[1] / app.tile_h * app.tile_h
             self.pick((x, y))
 
         if (e.type is MOUSEBUTTONDOWN and e.button == 3) or (
-                    e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
             x, y = e.pos[0] - app.tile_w / 2, e.pos[1] - app.tile_h / 2
             x = min(self.rect.w - app.tile_w - 1, max(0, x))
             y = min(self.rect.h - app.tile_h - 1, max(0, y))
@@ -301,7 +301,7 @@ class tdraw(gui.Widget):
 
     def event(self, e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 3) or (
-                    e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
+                e.type is MOUSEMOTION and e.buttons[2] == 1 and self.container.myfocus == self):
             self.picker_down(e)
         if e.type is MOUSEBUTTONDOWN and e.button == 1:
             a = '%s_down' % app.mode
@@ -896,7 +896,6 @@ def init_gui():
 
     # top = gui.Desktop()
     # top.theme.load(['default','tools'])
-
 
     # pass
 

@@ -1,4 +1,3 @@
-
 class Test(object):
 
     @property
@@ -9,10 +8,12 @@ class Test(object):
     def something(self, value):
         self.other = value
 
+
 t = Test()
 
-print t.something
+print
+t.something
 
 t.something = 123
-print t.other
-
+print
+t.other

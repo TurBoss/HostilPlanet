@@ -1,5 +1,5 @@
-import player
-import sprite
+from lib import player
+from lib import sprite
 
 
 def init(g, r, p):

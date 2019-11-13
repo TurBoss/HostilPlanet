@@ -1,8 +1,8 @@
 import pygame
-import sprite
-import player
-import parasitshoot
-from cnst import *
+from lib import sprite
+from lib import player
+from lib import parasitshoot
+from lib.cnst import *
 
 
 def init(g, r, n, facing='left', *params):

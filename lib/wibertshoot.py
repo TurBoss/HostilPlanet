@@ -1,5 +1,5 @@
-import player
-import sprite
+from lib import player
+from lib import sprite
 
 
 def init(g, r, p):
@@ -30,7 +30,6 @@ def init(g, r, p):
 
 
 def loop(g, s):
-
     s.vy += 0.2
 
     s.rect.x += s.vx * 3

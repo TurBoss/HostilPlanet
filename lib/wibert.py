@@ -1,9 +1,9 @@
 import pygame
-import sprite
-import player
-import wibertshoot
+from lib import sprite
+from lib import player
+from lib import wibertshoot
 import random
-from cnst import *
+from lib.cnst import *
 
 
 def init(g, r, n, facing='left', *params):
@@ -45,7 +45,7 @@ def init(g, r, n, facing='left', *params):
 
 
 def loop(g, s):
-    sprite.apply_gravity(g,s)
+    sprite.apply_gravity(g, s)
     sprite.apply_standing(g, s)
 
     # if s.rect.x == s._prev.x: # or sprite.get_code(g,s,sign(s.vx),0) == CODE_WIBERT_TURN:

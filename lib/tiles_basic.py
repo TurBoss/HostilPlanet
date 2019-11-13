@@ -1,8 +1,10 @@
 import pygame
-from cnst import *
+from lib.cnst import *
 import tiles
 import player
-import sprites
+
+import shoot
+import explosion
 
 
 def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
@@ -32,16 +34,16 @@ def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
 
     if got_hit and 'shoot' in b.groups:
         b.active = False
-        sprites.shoot.sound(g)
+        shoot.sound(g)
 
     if got_hit and 'cannon' in b.groups:
-        sprites.shoot.sound(g)
-        sprites.explosion.init(g, b.rect, b)
+        shoot.sound(g)
+        explosion.init(g, b.rect, b)
         b.active = False
 
     if got_hit and 'granadelauncher' in b.groups:
-        sprites.shoot.sound(g)
-        sprites.explosion.init(g, b.rect, b)
+        shoot.sound(g)
+        explosion.init(g, b.rect, b)
         b.active = False
 
     if got_hit and 'enemyshoot' in b.groups:
@@ -67,8 +69,8 @@ def hit_fally(g, a, b, top=1, right=1, bottom=1, left=1):
     if not hasattr(b, 'standing'): return
     if b.standing != a: return
 
-    import tile
-    import sprite
+    from lib import tile
+    from lib import sprite
     tile.tile_to_sprite(g, a)
 
     s = a
@@ -185,7 +187,7 @@ def hit_item(g, a, b, pts):
     g.game.score += pts
     tile_explode(g, a)
 
-    import sprites
+    from lib import sprites
     sprites.points.init(g, a.rect, pts)
 
 
@@ -209,6 +211,7 @@ def hit_power(g, a, b, weapon):
     player.powerup(g, b, weapon)
     tile_explode(g, a)
 
+
 def hit_drone(g, a, b, drone):
     if not tile_close(g, a, b): return
 
@@ -225,6 +228,7 @@ def hit_drone(g, a, b, drone):
 
     tile_explode(g, a)
 
+
 def hit_jetpack(g, a, b, jetpack):
     if not tile_close(g, a, b): return
 
@@ -238,6 +242,7 @@ def hit_jetpack(g, a, b, jetpack):
         g.game.jetpacks[2] = jetpack
 
     tile_explode(g, a)
+
 
 def tile_close(g, a, b):
     r1 = pygame.Rect(a.rect)
@@ -253,7 +258,7 @@ def tile_close(g, a, b):
 def tile_explode(g, a):
     g.game.sfx['explode'].play()
     tiles.t_put(g, a.pos, 0)
-    import tile
+    from lib import tile
     tile.tile_to_sprite(g, a)
     s = a
     s.hit_groups = set()

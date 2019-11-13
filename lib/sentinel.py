@@ -1,7 +1,7 @@
 import pygame
-import sprite
-import player
-from cnst import *
+from lib import sprite
+from lib import player
+from lib.cnst import *
 import random
 
 

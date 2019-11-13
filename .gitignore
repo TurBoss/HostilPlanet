@@ -4,3 +4,6 @@ build/
 dist/
 _preview.tga
 .idea/
+venv/
+
+venv37/

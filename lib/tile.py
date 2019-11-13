@@ -1,5 +1,5 @@
-from cnst import *
-import sprite
+from lib.cnst import *
+from lib import sprite
 
 
 def t_init(g, r, n, hit_groups, hit, *params):
@@ -14,7 +14,7 @@ def t_init(g, r, n, hit_groups, hit, *params):
     t.standable = 0
     if len(params) > 0:
         t.standable = params[0]
-    g.layer[r.centery / TH][r.centerx / TW] = t
+    g.layer[r.centery // TH][r.centerx // TW] = t
     return t
 
 
@@ -43,7 +43,7 @@ def th_init(g, r, n, hit_groups, hit, *params):
 
 
 def tile_to_sprite(g, s):
-    import tiles
+    from lib import tiles
     x, y = s.rect.centerx / TW, s.rect.centery / TH
     tiles.t_put(g, (x, y), 0)
 

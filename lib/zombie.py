@@ -1,8 +1,8 @@
 import pygame
 
-import player
-import sprite
-from cnst import *
+from lib import player
+from lib import sprite
+from lib.cnst import *
 
 
 def init(g, r, n, facing='left', *params):
@@ -53,7 +53,6 @@ def loop(g, s):
     # s.rect.x = s._prev.x
     # s.direction = - s.direction
     # s.next_frame = 1
-
 
     if g.frame % s.speed == 0:
         if s.walking:

@@ -9,10 +9,11 @@ directory.
 import sys
 import os
 import pygame
-from pgu import timer
-from pgu import engine
-from cnst import *
-import data
+
+from lib.pgu import timer
+from lib.pgu import engine
+from lib.cnst import *
+from lib.data import filepath
 
 
 class Input:
@@ -39,6 +40,7 @@ class Sound:
 
 
 class Game(engine.Game):
+
     def init_play(self):
         self.score = 0
         self.high = 0
@@ -71,7 +73,8 @@ class Game(engine.Game):
         if not self.lowres:
             sw, sh = sw * 2, sh * 2
         mode = 0
-        if FULL: mode |= FULLSCREEN
+        if FULL:
+            mode |= FULLSCREEN
         if '-full' in sys.argv:
             mode ^= FULLSCREEN
         self.screen = pygame.display.set_mode((sw, sh), mode)
@@ -97,14 +100,14 @@ class Game(engine.Game):
 
         pygame.font.init()
 
-        f_main = data.filepath(os.path.join('fonts', '04B_20__.TTF'))
+        f_main = filepath(os.path.join('fonts', '04B_20__.TTF'))
         f_scale = 0.16
         # f_main = data.filepath(os.path.join('fonts','04B_25__.TTF'))
         # f_scale = 0.75
         # f_main = data.filepath(os.path.join('fonts','04B_11__.TTF'))
         # f_scale = 0.67
 
-        self.fonts = {}
+        self.fonts = dict()
         self.fonts['intro'] = pygame.font.Font(f_main, int(58 * f_scale))
         # self.fonts['intro2'] = pygame.font.Font(data.filepath(os.path.join('fonts','vectroid.ttf')),72)
 
@@ -117,12 +120,13 @@ class Game(engine.Game):
 
         self.fonts['pause'] = pygame.font.Font(f_main, int(58 * f_scale))
 
-        import level
-        level.pre_load()
+        from lib.level import pre_load
+        pre_load()
 
         try:
 
-            if '-nosound' in sys.argv: 1 / 0
+            if '-nosound' in sys.argv:
+                1 / 0
 
             # stop crackling sound on some windows XP machines.
             if os.name == 'posix' or 1:
@@ -138,7 +142,7 @@ class Game(engine.Game):
 
             pygame.mixer.init()
         except:
-            print 'mixer not initialized'
+            print('mixer not initialized')
 
         self._music_name = None
 
@@ -146,14 +150,14 @@ class Game(engine.Game):
         # wav files
         for name in ['shoot', 'capsule', 'coin', 'hit', 'item', 'powerup',
                      'pop', 'jump', 'explode', 'door', 'fally', 'boss_explode', 'laser']:
-            self.sfx[name] = Sound(data.filepath(os.path.join('sfx', '%s.wav' % name)))
+            self.sfx[name] = Sound(filepath(os.path.join('sfx', '%s.wav' % name)))
 
         for name in ['rocket1', 'shootgun1', 'armor1', 'cannon', 'sboom']:
-            self.sfx[name] = Sound(data.filepath(os.path.join('sfx', '%s.ogg' % name)))
+            self.sfx[name] = Sound(filepath(os.path.join('sfx', '%s.ogg' % name)))
 
     def tick(self):
         r = self.timer.tick()
-        if r != None: print r
+        if r != None: print(r)
 
     def flip(self):
         if not self.lowres:
@@ -171,7 +175,7 @@ class Game(engine.Game):
 
             # silly TV effect ...
             if '-tv' in sys.argv:
-                for y in xrange(0, SH * 2, 2):
+                for y in range(0, SH * 2, 2):
                     self._screen.fill((0, 0, 0), (0, y, SW * 2, 1))
 
         pygame.display.flip()
@@ -183,7 +187,7 @@ class Game(engine.Game):
         if not pygame.mixer.get_init(): return
 
         for ext in ['wav', 'ogg']:
-            fname = data.filepath(os.path.join('music', '%s.%s' % (name, ext)))
+            fname = filepath(os.path.join('music', '%s.%s' % (name, ext)))
             ok = False
             try:
                 # print fname
@@ -322,7 +326,7 @@ def main():
     g = Game()
     g.init()
 
-    import menu
+    from lib import menu
 
     l = l2 = menu.Menu(g)
     l = menu.Intro(g, l2)
@@ -333,3 +337,7 @@ def main():
 
     g.run(l)
     pygame.quit()
+
+
+if __name__ == "__main__":
+    main()
