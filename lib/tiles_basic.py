@@ -1,10 +1,10 @@
 import pygame
 from lib.cnst import *
-from lib import tiles
-from lib import player
+import tiles
+import player
 
-from lib import shoot
-from lib import explosion
+import shoot
+import explosion
 
 
 def hit_block(g, a, b, top=1, right=1, bottom=1, left=1):
